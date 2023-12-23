@@ -1,3 +1,23 @@
+<?php
+
+//INSERT INTO `notes` (`sno`, `title`, `description`, `tstamp`) VALUES (NULL, 'Buy books', 'Please buy books from the store', current_timestamp());
+
+// Connect to the database
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'notes';
+
+// Create a connection
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Die if connection was not successful.
+if (!$conn){
+  dir("Sorry we failed to connect: " . mysqli_connect_error());
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -47,6 +67,35 @@
               </div>
             <button type="submit" class="btn btn-primary">Add Note</button>
         </form>
+    </div>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Title</th>
+            <th scope="col">Desciption</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
+            $sql = "SELECT * FROM `notes`";
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result)){
+              echo  "
+              <tr>
+                <th scope='row'>" .$row['sno'] ."</th>
+                <td>" .$row['title'] ."</td>
+                <td>" .$row['description'] ."</td>
+                <td> Actions </td>
+              </tr>";
+            }
+        ?>
+        </tbody>
+      </table>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
