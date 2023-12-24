@@ -42,13 +42,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>iNotes - Notes taking made easy</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
+    <title>iNotes - Notes taking made easy</title>
+
+
   </head>
   <body>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+    Edit Modal
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -124,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 <th scope='row'>" .$row['sno'] ."</th>
                 <td>" .$row['title'] ."</td>
                 <td>" .$row['description'] ."</td>
-                <td> <button type='submit' class='btn btn-primary'>Edit</button> <button type='submit' class='btn btn-primary'>Delete</button></td>
+                <td><button class='edit' btn btn-sm btn-primary>Edit</button> <a href='/del'> Delete</a></td>
               </tr>";
             }
         ?>
@@ -132,7 +158,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       </table>
 
     </div>
+    <hr>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    
+    <script>
+      let table = new DataTable('#myTable');
+    </script>
+    <script>
+      edits = document.getElementsByClassName('edit');
+      Array.from(edits).forEach((element)=>{
+        element.addEventListener("click", (e)=>{
+          console.log("edit", );
+          tr = e.target.parentNode.parentNode;
+          title = tr.getElementsByTagName("td")[0].innerText;
+          description = tr.getElementsByTagName("td")[1].innerText;
+          console.log(title, description);
+        })
+      })
+    </script>
   </body>
 </html>
